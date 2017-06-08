@@ -9,8 +9,12 @@
 import codecs
 import os
 import operator
+<<<<<<< HEAD
 from Tkinter import *
 import Tkinter, Tkconstants, tkFileDialog
+=======
+from stopwords import filter_stop
+>>>>>>> a015a3c11e554fd9da7d283b6579ce10c587df66
 from pptx import Presentation # pip install python-pptx
 
 # 1) Take input from user for filename/path
@@ -48,18 +52,32 @@ def findFile():
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
+
+# for each slide, for each paragraph run, find the runs with the biggest font
+# insert each word to a word list
+# do a word count of those words in the word list
 def parseText(presentation):
     wordList = []
+    greatestFontDict = {}
     for slide in presentation.slides:
+        max = 0
+        greatestRun = []
         for shape in slide.shapes:
             if not shape.has_text_frame:
                 continue
             for paragraph in shape.text_frame.paragraphs:
+
                 for run in paragraph.runs:
                     # read the text in the text box, encode it from unicode to ascii, get rid of extra white space
                     # then finally add all the contents in the split() list to the word list
-                    wordList.extend(run.text.encode('ascii', 'ignore').split() )
-    return wordList
+                    # could have data loss
+                    if(run.font.size > max):
+                        greatestRun = run.text.encode('ascii', 'ignore').split()
+                        max = run.font.size
+        # for word in greatestRun:
+        #     print word
+        wordList.extend(greatestRun)
+    return filter_stop(wordList)
 
 # Figure this out, I don't know how we want to sort out the metadata yet
 # for now, all I did was find the top 15 common words used
@@ -83,7 +101,7 @@ def parseMetaData(wordList):
         i += 1
     # top 15 or when we run out
     while i < 15 and i < len(sorted_words):
-        keywords += " " + sorted_words[i]
+        keywords += ", " + sorted_words[i]
         i += 1
 
     return keywords
