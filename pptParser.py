@@ -50,7 +50,7 @@ def findFile():
 
     for fileName in pptx_files:
         powerPoints.append(Presentation(fileName))
-    
+
     return powerPoints, pptx_files
 
 # Take each slide, read everything that contains a text frame (including shapes)
