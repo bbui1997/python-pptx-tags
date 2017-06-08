@@ -9,6 +9,8 @@
 import codecs
 import os
 import operator
+from Tkinter import *
+import Tkinter, Tkconstants, tkFileDialog
 from pptx import Presentation # pip install python-pptx
 
 # 1) Take input from user for filename/path
@@ -36,9 +38,13 @@ def findFile():
     # raw_input() returns a String, input() returns a python expression
     # raw_input() in Python 2.7 is the same as Python3's input()
     # we can figure out how we want the user to input a file name later
-    pptx_filename = raw_input("Enter pptx filename: ")
-    prs = Presentation (pptx_filename)
-    return prs, pptx_filename
+
+    pptx_fileName = tkFileDialog.askopenfilename()
+    print (pptx_fileName)
+    print()
+    prs = Presentation (pptx_fileName)
+    #pptx_file.close()
+    return prs, pptx_fileName
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
