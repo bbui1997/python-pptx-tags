@@ -1,6 +1,10 @@
 # python-pptx-metadata
 python-pptx collects metadata from powerpoint presentations
 
-run $ python pptParser.py
+
+$ python pptParser.py
   browse to pptx file(s)
   
+## Prerequisites
+1. Install Docker
+2. Clone repo
