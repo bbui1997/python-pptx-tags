@@ -22,7 +22,7 @@ from pptx import Presentation # pip install python-pptx
 def main():
     prsAndFileNameTuple = findFile()
 
-        print "Parsing: " + os.path.basename(filename) + "\n"
+    
 
     if prsAndFileNameTuple is None:
         sys.exit()
