@@ -26,7 +26,7 @@ def main():
         prs = prsAndFileNameTuple[0][i]
         filename = prsAndFileNameTuple[1][i]
 
-        print filename
+        print "Parsing: " + os.path.basename(filename)
 
         # Get all of the text or sorted list of most popular words, need to decide
         wordList = parseText(prs)
