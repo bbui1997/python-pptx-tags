@@ -26,7 +26,7 @@ def main():
         prs = prsAndFileNameTuple[0][i]
         filename = prsAndFileNameTuple[1][i]
 
-        print "Parsing: " + os.path.basename(filename)
+        print "Parsing: " + os.path.basename(filename) + "\n"
 
         # Get all of the text or sorted list of most popular words, need to decide
         wordList = parseText(prs)
@@ -43,8 +43,6 @@ def findFile():
     # raw_input() returns a String, input() returns a python expression
     # raw_input() in Python 2.7 is the same as Python3's input()
     # we can figure out how we want the user to input a file name later
-
-    pptx_files = tkFileDialog.askopenfilenames()
 
     powerPoints = []
 
