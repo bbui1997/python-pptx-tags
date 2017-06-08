@@ -22,7 +22,7 @@ from pptx import Presentation # pip install python-pptx
 def main():
     prsAndFileNameTuple = findFile()
     i = 0
-    for i in range(len(prsAndFileNameTuple)):
+    for i in range(len(prsAndFileNameTuple) - 1):
         prs = prsAndFileNameTuple[0][i]
         filename = prsAndFileNameTuple[1][i]
 
@@ -45,13 +45,16 @@ def findFile():
     # we can figure out how we want the user to input a file name later
 
     pptx_files = tkFileDialog.askopenfilenames()
+    print len(pptx_files)
 
     powerPoints = []
 
     for fileName in pptx_files:
         powerPoints.append(Presentation(fileName))
+
+    print len(powerPoints)
     
-    return powerPoints, pptx_files
+    return (powerPoints, pptx_files)
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
