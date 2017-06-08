@@ -8,4 +8,4 @@ $ python pptParser.py
 ## Prerequisites
 1. Install Docker
 2. Clone repo
-3.askdn
+
