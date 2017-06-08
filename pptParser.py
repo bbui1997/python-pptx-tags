@@ -9,6 +9,7 @@
 import codecs
 import os
 import operator
+from stopwords import filter_stop
 from pptx import Presentation # pip install python-pptx
 
 # 1) Take input from user for filename/path
@@ -47,11 +48,17 @@ def findFile():
 # insert each word to a word list
 # do a word count of those words in the word list
 def parseText(presentation):
+    count = 1
+    print("made it to parseText")
     wordList = []
     greatestRun = []
+    i = 0
     greatestFontDict = {}
     for slide in presentation.slides:
+        print "on slide {}".format(i)
+        i += 1
         max = 0
+        greatestRun = []
         for shape in slide.shapes:
             if not shape.has_text_frame:
                 continue
@@ -64,9 +71,10 @@ def parseText(presentation):
                     if(run.font.size > max):
                         greatestRun = run.text.encode('ascii', 'ignore').split()
                         max = run.font.size
-
+        # for word in greatestRun:
+        #     print word
         wordList.extend(greatestRun)
-    return wordList
+    return filter_stop(wordList)
 
 # Figure this out, I don't know how we want to sort out the metadata yet
 # for now, all I did was find the top 15 common words used

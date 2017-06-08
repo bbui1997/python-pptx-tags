@@ -13,5 +13,3 @@ def filter_stop(words):
             list.append(word)
 
     return list
-
-print filter_stop(testlist)
