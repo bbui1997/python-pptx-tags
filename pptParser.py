@@ -21,7 +21,7 @@ from pptx import Presentation # pip install python-pptx
 
 def main():
     prsAndFileNameTuple = findFile()
-
+    #print " Length of tuple" + str(len(prsAndFileNameTuple))
     
 
     if prsAndFileNameTuple is None:
@@ -29,7 +29,8 @@ def main():
 
     else:
         i = 0
-        for i in range(len(prsAndFileNameTuple) - 1):
+        for i in range(len(prsAndFileNameTuple[1])):
+            #print "i is " + str(i)
             prs = prsAndFileNameTuple[0][i]
             #print "prs is " + str(prs)
             filename = prsAndFileNameTuple[1][i]
@@ -47,6 +48,7 @@ def main():
 
             # Insert metadata (Core Properties) to appropriate location
             populateCoreProperties(prs, metadata, filename)
+            i += 1
 
 def findFile():
     # raw_input() returns a String, input() returns a python expression
@@ -57,12 +59,12 @@ def findFile():
     pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point","*.pptx"),))
 
     powerPoints = []
-    fileNameList = []
+    i = 0
     for fileName in pptx_files:
-
+        #print "Selected files " + fileName
         powerPoints.append(Presentation(fileName))
         count+=1
-
+        #i += 1
     if count == 0:
         print("No files entered. Aborting")
         return None
