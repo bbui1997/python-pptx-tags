@@ -9,12 +9,9 @@
 import codecs
 import os
 import operator
-<<<<<<< HEAD
 from Tkinter import *
 import Tkinter, Tkconstants, tkFileDialog
-=======
 from stopwords import filter_stop
->>>>>>> a015a3c11e554fd9da7d283b6579ce10c587df66
 from pptx import Presentation # pip install python-pptx
 
 # 1) Take input from user for filename/path
