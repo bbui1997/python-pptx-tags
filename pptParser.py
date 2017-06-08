@@ -9,12 +9,9 @@
 import codecs
 import os
 import operator
-<<<<<<< HEAD
 from Tkinter import *
 import Tkinter, Tkconstants, tkFileDialog
-=======
 from stopwords import filter_stop
->>>>>>> a015a3c11e554fd9da7d283b6579ce10c587df66
 from pptx import Presentation # pip install python-pptx
 
 # 1) Take input from user for filename/path
@@ -45,7 +42,6 @@ def findFile():
 
     pptx_fileName = tkFileDialog.askopenfilename()
     print (pptx_fileName)
-    print()
     prs = Presentation (pptx_fileName)
     #pptx_file.close()
     return prs, pptx_fileName
@@ -71,7 +67,7 @@ def parseText(presentation):
                     # read the text in the text box, encode it from unicode to ascii, get rid of extra white space
                     # then finally add all the contents in the split() list to the word list
                     # could have data loss
-                    if(run.font.size > max):
+                    if(run.font.size >= max):
                         greatestRun = run.text.encode('ascii', 'ignore').split()
                         max = run.font.size
         # for word in greatestRun:
