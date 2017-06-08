@@ -1,3 +1,11 @@
+# TODO:
+# 1) Finish this program
+#   a. Figure out how we want the user to choose the PowerPoint file
+#   b. Error handling involved with choosing a file
+#   c. finalize as a group what we want to be our metadata
+#   d. figure out/edit how the metadata is being inserted to the program
+# 2) Set up code delivery in a way where our user only has to do 1 simple installation to use our program
+
 import codecs
 import os
 import operator
