@@ -14,69 +14,48 @@ import Tkinter, Tkconstants, tkFileDialog
 from stopwords import filter_stop
 from pptx import Presentation # pip install python-pptx
 
-# 1) Take input from user for filename/path
-# 2) Parse presentation for text
+# 1) Open dialog box to select pptx files (currently doesn't parse metadata for .ppt files)
+# 2) For each presentation, parse presentation for text
 # 3) Take text and categorize into core properties
-# 4) Actually insert those core properties to Presentation
+# 4) Actually insert those core properties to each Presentation
 
 def main():
+    # Get all of files that user wants to change tags for
+    # Tuple is a ( [list of Presentations], [list of filenames] )
     prsAndFileNameTuple = findFile()
+    i = 0
 
-    
+    # for each file, parse metadata
+    for i in range(len(prsAndFileNameTuple)):
+        prs = prsAndFileNameTuple[0][i]
+        filename = prsAndFileNameTuple[1][i]
 
-    if prsAndFileNameTuple is None:
-        sys.exit()
+        # Get the largest text from each slide, add each of those word to a list
+        wordList = parseText(prs)
 
-    else:
-        i = 0
-        for i in range(len(prsAndFileNameTuple) - 1):
-            prs = prsAndFileNameTuple[0][i]
-            #print "prs is " + str(prs)
-            filename = prsAndFileNameTuple[1][i]
+        # rank the word list to figure out the order in which we will populate the tags
+        metadata = parseMetaData(wordList)
 
-
-            print "Parsing: " + os.path.basename(filename)
-
-            # Get all of the text or sorted list of most popular words, need to decide
-            wordList = parseText(prs)
-
-            # Get 15 item tuple from text, it is possible that some items will be blank
-            # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
-            # HOWEVER, we may only have to insert the keywords
-            metadata = parseMetaData(wordList)
-
-            # Insert metadata (Core Properties) to appropriate location
-            populateCoreProperties(prs, metadata, filename)
+        # Insert metadata (Core Properties) to tags
+        populateCoreProperties(prs, metadata, filename)
 
 def findFile():
-    # raw_input() returns a String, input() returns a python expression
-    # raw_input() in Python 2.7 is the same as Python3's input()
-    # we can figure out how we want the user to input a file name later
+    pptx_files = [] # list of filenames
+    powerPoints = [] # list of Presentations
 
-    count = 0
-    pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point","*.pptx"),))
+    pptx_files.extend(tkFileDialog.askopenfilenames()) # add each file name to list
 
-    powerPoints = []
-    fileNameList = []
+    # add a Presentation object for each filename
     for fileName in pptx_files:
-
         powerPoints.append(Presentation(fileName))
-        count+=1
 
-    if count == 0:
-        print("No files entered. Aborting")
-        return None
+    # return 2-tuple of lists of Presentations, and filenames
+    return (powerPoints, pptx_files)
 
-    else:
-        return powerPoints, pptx_files
-
-
-# Take each slide, read everything that contains a text frame (including shapes)
-# Insert it into a list
 
 # for each slide, for each paragraph run, find the runs with the biggest font
 # insert each word to a word list
-# do a word count of those words in the word list
+# filter out common words such as "the" or "is" and return that word list
 def parseText(presentation):
     wordList = []
     greatestFontDict = {}
@@ -95,13 +74,12 @@ def parseText(presentation):
                     if(run.font.size >= max):
                         greatestRun = run.text.encode('ascii', 'ignore').split()
                         max = run.font.size
-        # for word in greatestRun:
-        #     print word
+
         wordList.extend(greatestRun)
     return filter_stop(wordList)
 
-# Figure this out, I don't know how we want to sort out the metadata yet
-# for now, all I did was find the top 15 common words used
+# find the most common words in the word list
+# return a String
 def parseMetaData(wordList):
     # get the word count
     word_count = {}
