@@ -22,11 +22,11 @@ from pptx import Presentation # pip install python-pptx
 def main():
     prsAndFileNameTuple = findFile()
     i = 0
-    for i in range(len(prsAndFileNameTuple)):
+    for i in range(len(prsAndFileNameTuple) - 1):
         prs = prsAndFileNameTuple[0][i]
         filename = prsAndFileNameTuple[1][i]
 
-        print filename
+        print "Parsing: " + os.path.basename(filename)
 
         # Get all of the text or sorted list of most popular words, need to decide
         wordList = parseText(prs)
@@ -52,6 +52,7 @@ def findFile():
         powerPoints.append(Presentation(fileName))
 
     return powerPoints, pptx_files
+
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
