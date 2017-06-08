@@ -21,30 +21,37 @@ from pptx import Presentation # pip install python-pptx
 
 def main():
     prsAndFileNameTuple = findFile()
-    prs = prsAndFileNameTuple[0]
-    filename = prsAndFileNameTuple[1]
+    i = 0
+    for i in range(len(prsAndFileNameTuple)):
+        prs = prsAndFileNameTuple[0][i]
+        filename = prsAndFileNameTuple[1][i]
 
-    # Get all of the text or sorted list of most popular words, need to decide
-    wordList = parseText(prs)
+        print filename
 
-    # Get 15 item tuple from text, it is possible that some items will be blank
-    # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
-    # HOWEVER, we may only have to insert the keywords
-    metadata = parseMetaData(wordList)
+        # Get all of the text or sorted list of most popular words, need to decide
+        wordList = parseText(prs)
 
-    # Insert metadata (Core Properties) to appropriate location
-    populateCoreProperties(prs, metadata, filename)
+        # Get 15 item tuple from text, it is possible that some items will be blank
+        # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
+        # HOWEVER, we may only have to insert the keywords
+        metadata = parseMetaData(wordList)
+
+        # Insert metadata (Core Properties) to appropriate location
+        populateCoreProperties(prs, metadata, filename)
 
 def findFile():
     # raw_input() returns a String, input() returns a python expression
     # raw_input() in Python 2.7 is the same as Python3's input()
     # we can figure out how we want the user to input a file name later
 
-    pptx_fileName = tkFileDialog.askopenfilename()
-    print (pptx_fileName)
-    prs = Presentation (pptx_fileName)
-    #pptx_file.close()
-    return prs, pptx_fileName
+    pptx_files = tkFileDialog.askopenfilenames()
+
+    powerPoints = []
+
+    for fileName in pptx_files:
+        powerPoints.append(Presentation(fileName))
+    
+    return powerPoints, pptx_files
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
