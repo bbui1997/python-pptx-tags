@@ -1,0 +1,74 @@
+Quick Presentation Toolkit 8.4
+
+
+Let’s try this ourselves!
+The colors on this slide are way off. Help me correct them to meet Accenture Brand Standards!
+Use the Right Colors in Your Presentation
+
+
+Let’s try this ourselves!
+Use a Visual from the library to plot the following data on the most appropriate graph.
+Productivity with QPT
+Week 1 – 25%
+Week 2 – 45%
+Week 3 – 80%
+Week 4 – 100%
+Library of Visuals
+
+
+Let’s try this ourselves!
+Merge Text
+Sometimes you have many text 
+boxes.
+It would be nice if there were a way to easily combine them into one text box.
+Thankfully, Accenture employees can enjoy the convenience of the merge text feature in QPT.
+Sometimes you have many text boxes.
+It would be nice if there were a way to easily combine them into one text box.
+Thankfully, Accenture employees can enjoy the convenience of the merge text feature in QPT.
+
+
+Let’s try this ourselves!
+Convert Lines to Shapes
+It is very important that you have at least three lines.
+Click on the Convert Lines to Shapes icon in the Text Format Group.
+The text box will be separated into separate text boxes depending on the number of lines that you had in the original text box.
+QPT is awesome!
+
+
+Let’s try this ourselves!
+Touch
+T
+P
+Q
+Touch Left
+T
+P
+Q
+Touch Up
+T
+P
+Q
+Touch Right
+T
+P
+Q
+Touch Down
+
+
+Let’s try this ourselves!
+Apply the fill color and line style of the first object to the second object
+QPT Format Painter
+New Presentations
+Old Presentations
+
+
+Let’s try this ourselves!
+Make the following shapes the same height and width as the rectangle
+Height and Width
+
+
+Let’s try this ourselves!
+Create Harvey Balls that correspond to the percentage of each status item. Also, recolour the Harvey Balls so they are purple (yes you can easily recolour Harvey Balls now too!)
+Harvey Balls
+
+
