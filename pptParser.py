@@ -48,15 +48,9 @@ def findFile():
 # insert each word to a word list
 # do a word count of those words in the word list
 def parseText(presentation):
-    count = 1
-    print("made it to parseText")
     wordList = []
-    greatestRun = []
-    i = 0
     greatestFontDict = {}
     for slide in presentation.slides:
-        print "on slide {}".format(i)
-        i += 1
         max = 0
         greatestRun = []
         for shape in slide.shapes:
