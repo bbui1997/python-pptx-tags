@@ -44,6 +44,7 @@ def findFile():
     # raw_input() in Python 2.7 is the same as Python3's input()
     # we can figure out how we want the user to input a file name later
 
+<<<<<<< HEAD
     pptx_files = tkFileDialog.askopenfilenames()
     #print (pptx_fileName)
     #print()
@@ -53,6 +54,11 @@ def findFile():
         powerPoints.append(Presentation(fileName))
     
     #prs = Presentation (pptx_fileName)
+=======
+    pptx_fileName = tkFileDialog.askopenfilename()
+    print (pptx_fileName)
+    prs = Presentation (pptx_fileName)
+>>>>>>> dcde5032964fff0463451c317312e37e1759fdeb
     #pptx_file.close()
     return powerPoints, pptx_files
 
@@ -77,7 +83,7 @@ def parseText(presentation):
                     # read the text in the text box, encode it from unicode to ascii, get rid of extra white space
                     # then finally add all the contents in the split() list to the word list
                     # could have data loss
-                    if(run.font.size > max):
+                    if(run.font.size >= max):
                         greatestRun = run.text.encode('ascii', 'ignore').split()
                         max = run.font.size
         # for word in greatestRun:
