@@ -21,36 +21,55 @@ from pptx import Presentation # pip install python-pptx
 
 def main():
     prsAndFileNameTuple = findFile()
-    i = 0
-    for i in range(len(prsAndFileNameTuple) - 1):
-        prs = prsAndFileNameTuple[0][i]
-        filename = prsAndFileNameTuple[1][i]
 
         print "Parsing: " + os.path.basename(filename) + "\n"
 
-        # Get all of the text or sorted list of most popular words, need to decide
-        wordList = parseText(prs)
+    if prsAndFileNameTuple is None:
+        sys.exit()
 
-        # Get 15 item tuple from text, it is possible that some items will be blank
-        # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
-        # HOWEVER, we may only have to insert the keywords
-        metadata = parseMetaData(wordList)
+    else:
+        i = 0
+        for i in range(len(prsAndFileNameTuple) - 1):
+            prs = prsAndFileNameTuple[0][i]
+            #print "prs is " + str(prs)
+            filename = prsAndFileNameTuple[1][i]
 
-        # Insert metadata (Core Properties) to appropriate location
-        populateCoreProperties(prs, metadata, filename)
+
+            print "Parsing: " + os.path.basename(filename)
+
+            # Get all of the text or sorted list of most popular words, need to decide
+            wordList = parseText(prs)
+
+            # Get 15 item tuple from text, it is possible that some items will be blank
+            # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
+            # HOWEVER, we may only have to insert the keywords
+            metadata = parseMetaData(wordList)
+
+            # Insert metadata (Core Properties) to appropriate location
+            populateCoreProperties(prs, metadata, filename)
 
 def findFile():
     # raw_input() returns a String, input() returns a python expression
     # raw_input() in Python 2.7 is the same as Python3's input()
     # we can figure out how we want the user to input a file name later
 
+    count = 0
+    pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point","*.pptx"),))
+
     powerPoints = []
-
+    fileNameList = []
     for fileName in pptx_files:
-        powerPoints.append(Presentation(fileName))
 
-    
-    return (powerPoints, pptx_files)
+        powerPoints.append(Presentation(fileName))
+        count+=1
+
+    if count == 0:
+        print("No files entered. Aborting")
+        return None
+
+    else:
+        return powerPoints, pptx_files
+
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
