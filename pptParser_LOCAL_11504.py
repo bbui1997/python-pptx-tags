@@ -14,17 +14,14 @@ import Tkinter, Tkconstants, tkFileDialog
 from stopwords import filter_stop
 from pptx import Presentation # pip install python-pptx
 
-# 1) Open dialog box to select pptx files (currently doesn't parse metadata for .ppt files)
-# 2) For each presentation, parse presentation for text
+# 1) Take input from user for filename/path
+# 2) Parse presentation for text
 # 3) Take text and categorize into core properties
-# 4) Actually insert those core properties to each Presentation
+# 4) Actually insert those core properties to Presentation
 
 def main():
-    # Get all of files that user wants to change tags for
-    # Tuple is a ( [list of Presentations], [list of filenames] )
     prsAndFileNameTuple = findFile()
-
-    
+    #print " Length of tuple" + str(len(prsAndFileNameTuple))
     
 
     if prsAndFileNameTuple is None:
@@ -41,43 +38,47 @@ def main():
 
             print "Parsing: " + os.path.basename(filename)
 
-            # Get the largest text from each slide, add each of those word to a list
+            # Get all of the text or sorted list of most popular words, need to decide
             wordList = parseText(prs)
 
-            # rank the word list to figure out the order in which we will populate the tags
+            # Get 15 item tuple from text, it is possible that some items will be blank
+            # author, category, comments, content_status, created, identifier, keywords, language, last_modified_by, last_printed, modified, subject, title, version
+            # HOWEVER, we may only have to insert the keywords
             metadata = parseMetaData(wordList)
 
             # Insert metadata (Core Properties) to appropriate location
             populateCoreProperties(prs, metadata, filename)
-       
-            # Insert metadata (Core Properties) to tags
-            populateCoreProperties(prs, metadata, filename)
-
             i += 1
 
 def findFile():
-    pptx_files = [] # list of filenames
-    powerPoints = [] # list of Presentations
-
-    pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point", "*.pptx"),)) # add each file name to list
+    # raw_input() returns a String, input() returns a python expression
+    # raw_input() in Python 2.7 is the same as Python3's input()
+    # we can figure out how we want the user to input a file name later
 
     count = 0
+    pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point","*.pptx"),))
+
+    powerPoints = []
+    i = 0
     for fileName in pptx_files:
         #print "Selected files " + fileName
         powerPoints.append(Presentation(fileName))
         count+=1
-        
+        #i += 1
     if count == 0:
         print("No files entered. Aborting")
         return None
 
-    # return 2-tuple of lists of Presentations, and filenames
-    return (powerPoints, pptx_files)
+    else:
+        return powerPoints, pptx_files
 
+
+# Take each slide, read everything that contains a text frame (including shapes)
+# Insert it into a list
 
 # for each slide, for each paragraph run, find the runs with the biggest font
 # insert each word to a word list
-# filter out common words such as "the" or "is" and return that word list
+# do a word count of those words in the word list
 def parseText(presentation):
     wordList = []
     greatestFontDict = {}
@@ -96,12 +97,13 @@ def parseText(presentation):
                     if(run.font.size >= max):
                         greatestRun = run.text.encode('ascii', 'ignore').split()
                         max = run.font.size
-
+        # for word in greatestRun:
+        #     print word
         wordList.extend(greatestRun)
     return filter_stop(wordList)
 
-# find the most common words in the word list
-# return a String
+# Figure this out, I don't know how we want to sort out the metadata yet
+# for now, all I did was find the top 15 common words used
 def parseMetaData(wordList):
     # get the word count
     word_count = {}

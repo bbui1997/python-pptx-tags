@@ -23,53 +23,31 @@ def main():
     # Get all of files that user wants to change tags for
     # Tuple is a ( [list of Presentations], [list of filenames] )
     prsAndFileNameTuple = findFile()
+    i = 0
 
-    
-    
+    # for each file, parse metadata
+    for i in range(len(prsAndFileNameTuple)):
+        prs = prsAndFileNameTuple[0][i]
+        filename = prsAndFileNameTuple[1][i]
 
-    if prsAndFileNameTuple is None:
-        sys.exit()
+        # Get the largest text from each slide, add each of those word to a list
+        wordList = parseText(prs)
 
-    else:
-        i = 0
-        for i in range(len(prsAndFileNameTuple[1])):
-            #print "i is " + str(i)
-            prs = prsAndFileNameTuple[0][i]
-            #print "prs is " + str(prs)
-            filename = prsAndFileNameTuple[1][i]
+        # rank the word list to figure out the order in which we will populate the tags
+        metadata = parseMetaData(wordList)
 
-
-            print "Parsing: " + os.path.basename(filename)
-
-            # Get the largest text from each slide, add each of those word to a list
-            wordList = parseText(prs)
-
-            # rank the word list to figure out the order in which we will populate the tags
-            metadata = parseMetaData(wordList)
-
-            # Insert metadata (Core Properties) to appropriate location
-            populateCoreProperties(prs, metadata, filename)
-       
-            # Insert metadata (Core Properties) to tags
-            populateCoreProperties(prs, metadata, filename)
-
-            i += 1
+        # Insert metadata (Core Properties) to tags
+        populateCoreProperties(prs, metadata, filename)
 
 def findFile():
     pptx_files = [] # list of filenames
     powerPoints = [] # list of Presentations
 
-    pptx_files = tkFileDialog.askopenfilenames(filetypes = (("Power Point", "*.pptx"),)) # add each file name to list
+    pptx_files.extend(tkFileDialog.askopenfilenames()) # add each file name to list
 
-    count = 0
+    # add a Presentation object for each filename
     for fileName in pptx_files:
-        #print "Selected files " + fileName
         powerPoints.append(Presentation(fileName))
-        count+=1
-        
-    if count == 0:
-        print("No files entered. Aborting")
-        return None
 
     # return 2-tuple of lists of Presentations, and filenames
     return (powerPoints, pptx_files)
