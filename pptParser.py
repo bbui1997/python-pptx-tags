@@ -17,11 +17,9 @@ from pptx import Presentation # pip install python-pptx
 # 4) Actually insert those core properties to Presentation
 
 def main():
-    # raw_input() returns a String, input() returns a python expression
-    # raw_input() in Python 2.7 is the same as Python3's input()
-    # we can figure out how we want the user to input a file name later
-    pptx_filename = raw_input("Enter pptx filename: ")
-    prs = Presentation (pptx_filename)
+    prsAndFileNameTuple = findFile()
+    prs = prsAndFileNameTuple[0]
+    filename = prsAndFileNameTuple[1]
 
     # Get all of the text or sorted list of most popular words, need to decide
     wordList = parseText(prs)
@@ -32,8 +30,15 @@ def main():
     metadata = parseMetaData(wordList)
 
     # Insert metadata (Core Properties) to appropriate location
-    populateCoreProperties(prs, metadata, pptx_filename)
+    populateCoreProperties(prs, metadata, filename)
 
+def findFile():
+    # raw_input() returns a String, input() returns a python expression
+    # raw_input() in Python 2.7 is the same as Python3's input()
+    # we can figure out how we want the user to input a file name later
+    pptx_filename = raw_input("Enter pptx filename: ")
+    prs = Presentation (pptx_filename)
+    return prs, pptx_filename
 
 # Take each slide, read everything that contains a text frame (including shapes)
 # Insert it into a list
