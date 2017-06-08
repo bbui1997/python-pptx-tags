@@ -45,14 +45,12 @@ def findFile():
     # we can figure out how we want the user to input a file name later
 
     pptx_files = tkFileDialog.askopenfilenames()
-    print len(pptx_files)
 
     powerPoints = []
 
     for fileName in pptx_files:
         powerPoints.append(Presentation(fileName))
 
-    print len(powerPoints)
     
     return (powerPoints, pptx_files)
 
