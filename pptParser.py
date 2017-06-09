@@ -24,8 +24,8 @@ def main():
     # Tuple is a ( [list of Presentations], [list of filenames] )
     prsAndFileNameTuple = findFile()
 
-    
-    
+
+
 
     if prsAndFileNameTuple is None:
         sys.exit()
@@ -49,11 +49,12 @@ def main():
 
             # Insert metadata (Core Properties) to appropriate location
             populateCoreProperties(prs, metadata, filename)
-       
+
             # Insert metadata (Core Properties) to tags
             populateCoreProperties(prs, metadata, filename)
 
             i += 1
+    os.system("pause")
 
 def findFile():
     pptx_files = [] # list of filenames
@@ -63,10 +64,10 @@ def findFile():
 
     count = 0
     for fileName in pptx_files:
-        #print "Selected files " + fileName
+        print "Selected files " + fileName
         powerPoints.append(Presentation(fileName))
         count+=1
-        
+
     if count == 0:
         print("No files entered. Aborting")
         return None
