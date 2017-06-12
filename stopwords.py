@@ -1,5 +1,6 @@
-
+# from stop_words import get_stop_words # pip install stop-words
 def filter_stop(words):
+
     # extracted from stop_words import get_stop_words
     stop_list = ["a", "about", "above", "after", "again", "against", "all", "am",
     "an", "and", "any", "are", "aren't", "as", "at", "be", "because",

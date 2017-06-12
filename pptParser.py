@@ -10,8 +10,9 @@ from textblob import TextBlob as tb
 import codecs
 import os
 import operator
-from Tkinter import *
-import Tkinter, Tkconstants, tkFileDialog
+# from Tkinter import *
+# import Tkinter, Tkconstants, tkFileDialog
+from stop_words import get_stop_words
 from stopwords import filter_stop
 from pptx import Presentation # pip install python-pptx
 from tfidfForStringLists import sortedTfIdfLists
@@ -70,8 +71,8 @@ def findFile():
     # if count == 0:
     #     print("No files entered. Aborting")
     #     return None
-    currentPath = os.path.dirname(os.path.abspath(__file__))
     print "Finding all .pptx files.."
+    currentPath = os.path.dirname(os.path.abspath(__file__))
     for file in os.listdir(currentPath):
         try:
           if file.endswith(".pptx"):
@@ -119,7 +120,8 @@ def parseMetaData(wordList, val):
     if len(sorted_words) != 0:
         keywords = sorted_words[0][0]
 
-    # top 15 or when we run out
+
+    # top 10 or when we run out
     for word in sorted_words[1:val]:
         keywords += ", " + word[0]
 
