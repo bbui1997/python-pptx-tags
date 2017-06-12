@@ -55,4 +55,5 @@
 .idea/workspace.xml
 
 .idea/.name
-.pptx
+*.pptx
+*.pyc
