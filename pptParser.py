@@ -7,16 +7,13 @@
 # 2) Set up code delivery in a way where our user only has to do 1 simple installation to use our program
 from __future__ import division, unicode_literals
 from textblob import TextBlob as tb
-import codecs
 import os
 import operator
 # from Tkinter import *
 # import Tkinter, Tkconstants, tkFileDialog
-from stop_words import get_stop_words
 from stopwords import filter_stop
 from pptx import Presentation # pip install python-pptx
 from tfidfForStringLists import sortedTfIdfLists
-from time import time
 # 1) Open dialog box to select pptx files (currently doesn't parse metadata for .ppt files)
 # 2) For each presentation, parse presentation for text
 # 3) Take text and categorize into core properties
