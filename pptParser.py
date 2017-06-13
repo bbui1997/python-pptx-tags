@@ -9,6 +9,7 @@ from __future__ import division, unicode_literals
 from textblob import TextBlob as tb
 import os
 import operator
+import sys
 # from Tkinter import *
 # import Tkinter, Tkconstants, tkFileDialog
 from stopwords import filter_stop
